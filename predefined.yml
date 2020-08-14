@@ -43,13 +43,25 @@ services:
             - HOST_SYS=/host/sys
             - HOST_ETC=/host/etc
         volumes:
-            - /etc/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+            - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
             - /var/run/docker.sock:/var/run/docker.sock:ro
             - /sys:/host/sys:ro
             - /proc:/host/proc:ro
             - /etc:/host/etc:ro
         networks:
             - datenautobahn
+
+    kapacitor:
+        container_name: kapacitor
+        image: kapacitor:1.5.5-alpine
+        restart: always
+        volumes:
+            - "./kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro"
+            - "metricen:/var/lib/kapacitor"
+        networks:
+            - datenautobahn
+        ports:
+            - "8300:9092"
 
 
 volumes:
