@@ -15,7 +15,8 @@ services:
             - "8201:10000"
         deploy:
             placement:
-                constrains: [node.role == manager]
+                constraints:
+                    - "node.role==manager"
             resources:
                 limits:
                     cpus: '0.2'
@@ -48,7 +49,8 @@ services:
             - "8100:8086"
         deploy:
             placement:
-                constrains: [node.role == manager]
+                constraints:
+                    - "node.role==manager"
             resources:
                 limits:
                     cpus: '0.3'
@@ -104,7 +106,8 @@ services:
             - "8300:9092"
         deploy:
             placement:
-                constrains: [node.role == manager]
+                constraints: 
+                    - "node.role==manager"
             resources:
                 limits:
                     cpus: '0.1'
