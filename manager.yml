@@ -5,14 +5,14 @@ services:
         container_name: chronograf
         image: chronograf:1.8.4-alpine
         volumes:
-            - docker_data:/var/lib/chronograf
+            - tick_data:/var/lib/chronograf
         environment:
             - BOLT_PATH=/var/lib/chronograf/chronograf-v1.db
         networks:
             - fabric
         ports:
-            - "8200:8888"
-            - "8201:10000"
+            - target: 8888
+              published: 8889
         deploy:
             placement:
                 constraints:
@@ -34,7 +34,7 @@ services:
         container_name: influxdb
         image: influxdb:1.8.1-alpine
         volumes:
-            - docker_data:/var/lib/influxdb
+            - tick_data:/var/lib/influxdb
         environment:
             - INFLUXDB_DB=container_metrics
             - INFLUXDB_ADMIN_USER=DerAdmin
@@ -46,7 +46,8 @@ services:
         networks:
             - fabric
         ports:
-            - "8100:8086"
+            - target: 8086
+              published: 8101
         deploy:
             placement:
                 constraints:
@@ -81,6 +82,10 @@ services:
         networks:
             - fabric
         deploy:
+            mode: replicated
+            replicas: 100
+            placement:
+                max_replicas_per_node: 1
             resources:
                 limits:
                     cpus: '0.2'
@@ -99,11 +104,12 @@ services:
         image: kapacitor:1.5.5-alpine
         volumes:
             - "./kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro"
-            - "docker_data:/var/lib/kapacitor"
+            - "tick_data:/var/lib/kapacitor"
         networks:
             - fabric
         ports:
-            - "8300:9092"
+            - target: 9092
+              published: 8301
         deploy:
             placement:
                 constraints: 
@@ -123,7 +129,7 @@ services:
 
 
 volumes:
-    docker_data:
+    tick_data:
             
 networks:
     fabric:
