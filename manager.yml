@@ -12,7 +12,7 @@ services:
             - fabric
         ports:
             - target: 8888
-              published: 8889
+              published: 8200
         deploy:
             placement:
                 constraints:
@@ -45,9 +45,6 @@ services:
             - INFLUXDB_READ_USER_PASSWORD=KronosGaiaUranus
         networks:
             - fabric
-        ports:
-            - target: 8086
-              published: 8101
         deploy:
             placement:
                 constraints:
@@ -107,9 +104,6 @@ services:
             - "tick_data:/var/lib/kapacitor"
         networks:
             - fabric
-        ports:
-            - target: 9092
-              published: 8301
         deploy:
             placement:
                 constraints: 
