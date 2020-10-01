@@ -3,11 +3,15 @@ version: "3.8"
 services:
     chronograf:
         container_name: chronograf
-        image: chronograf:1.8.4-alpine
+        image: chronograf:1.8.6
+        user: "6666:6666"
         volumes:
-            - tick_data:/var/lib/chronograf
+            - tick_data:/tmp
+            - ./chronograf-v1.db:/tmp/chronograf-v1.db
         environment:
-            - BOLT_PATH=/var/lib/chronograf/chronograf-v1.db
+            - BOLT_PATH=/tmp/chronograf-v1.db
+        #    - CANNED_PATH=/tmp
+        #    - RESOURCES_PATH=/tmp
         networks:
             - fabric
         ports:

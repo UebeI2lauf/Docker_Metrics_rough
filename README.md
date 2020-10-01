@@ -5,6 +5,8 @@ And please change the credentials - they are just (very bad) examples.
 ## The Setup
 
 - Just clone the code to a place of your liking,note that changing the location of individualy may break the composer file.
+- change the BOLT-path to location on your system.
+- Change the filepermession accordingly for the futer dockeruser (here 6666:6666) Note I use an unnamed "user" but it is also possible to use an systemuser or an user with an account.However I strongly recomend a as small as possible attack surface since its our only container that will be accesable from the web.
 - Run:
 ><code>sudo docker-compose -f predefefined.yml up</code>
 
